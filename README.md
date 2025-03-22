@@ -1,6 +1,6 @@
 # Client Gateway
 
-Este proyecto es parte de una arquitectura de microservicios desarrollada con NestJS. El cliente gateway actúa como un punto de entrada para interactuar con los servicios relacionados con la gestión de productos.
+Este proyecto es parte de una arquitectura de microservicios desarrollada con NestJS. El gateway es el punto de comunicación entre nuestros clientes y nuestros servicios. Es el encargado de recibir las peticiones, enviarlas a los servicios correspondientes y devolver la respuesta al cliente.
 
 ## Características
 
@@ -14,48 +14,15 @@ Este proyecto es parte de una arquitectura de microservicios desarrollada con Ne
 - npm v8 o superior
 - Docker (opcional, para contenedores)
 
-## Instalación
+## Dev
 
-1. Clona el repositorio:
-  ```bash
-  git clone https://github.com/Microservicios-Nest-Nicolas/client-gateway.git
-  cd client-gateway
-  ```
+1. Clonar el repositorio
+2. Instalar dependencias
+3. Crear un archivo `.env` basado en el `env.template`
+4. Tener levantados los microservicios que se van a consumir
+5. Levantar proyecto con `npm run start:dev`
 
-2. Instala las dependencias:
-  ```bash
-  npm install
-  ```
+# Nats
 
-3. Configura las variables de entorno:
-  Crea un archivo `.env` en la raíz del proyecto y define las variables necesarias:
-  ```env
-  PORT=3000
-  SERVICE_URL=http://localhost:4000
-  ```
-
-## Uso
-
-1. Inicia el servidor:
-  ```bash
-  npm run start
-  ```
-
-2. Accede al gateway en `http://localhost:3000`.
-
-## Scripts Disponibles
-
-- `npm run start`: Inicia el servidor en modo producción.
-- `npm run start:dev`: Inicia el servidor en modo desarrollo.
-- `npm run test`: Ejecuta las pruebas unitarias.
-
-## Estructura del Proyecto
-
-```
-src/
-├── app.module.ts
-├── main.ts
-├── controllers/
-├── services/
-└── dtos/
-```
+- Mediante docker levantamos Nats con el siguiente comando:
+`docker run -d --name nats-server -p 4222:4222 -p 6222:6222 -p 8222:8222 nats`
