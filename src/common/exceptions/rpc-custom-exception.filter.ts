@@ -11,9 +11,17 @@ export class RpcCustomExceptionFilter implements ExceptionFilter {
   catch(exception: RpcException, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();
-    const error = exception.getError();
-    const rpcError =
-      typeof error === 'string' ? { message: error, status: 400 } : error;
+    const rpcError = exception.getError();
+
+    //! Manejamos el error(microservicio caido) sin mostrar informacion del microservicio
+    if (rpcError.toString().includes('Empty response')) {
+      return response.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: rpcError
+          .toString()
+          .substring(0, rpcError.toString().indexOf('(') - 1),
+      });
+    }
 
     if (
       typeof rpcError === 'object' &&
